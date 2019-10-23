@@ -1,0 +1,12 @@
+{
+  "name": "storex-docs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:WorldBrain/storex-docs.git",
+  "author": "Vincent den Boer <vincent@shishkabab.net>",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "docsify-cli": "^4.3.0"
+  }
+}
