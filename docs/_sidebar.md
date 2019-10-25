@@ -1,0 +1,15 @@
+- [Home](/README.md)
+- [Guides](/guides/)
+
+  - [Quickstarts](/guides/quickstarts/)
+  - [Storage middleware](/guides/storage-middleware/)
+  - [Storage modules](/guides/storage-modules/)
+  - [GraphQL API](/guides/graphql-api/)
+  - [Multi-device sync](/guides/multi-device-sync/)
+  - [TypeScript generator](/guides/typescript-generator/)
+
+- [Best practices](/best-practices/)
+- [Advanced usage](/advanced-usage/)
+- [Use cases](/use-cases/)
+- [Case studies](/case-studies/)
+- [Resources](/resources/)
