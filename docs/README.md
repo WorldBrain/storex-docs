@@ -6,6 +6,14 @@ The aim is to provide a minimalistic common ground/language for working with you
 
 _This project started as the storage layer for Memex, a tool to organize your web-research for yourself and collaboratively, in collaboration with [YouAPT](https://www.youapt.eu/). Download it [here](https://worldbrain.io/), and check out our vision [here](https://worldbrain.io/vision)._
 
+# Why does Storex exist?
+
+Over the years, many storage technologies and architectures have been researched and developed. Each of these technologies consists different trade-offs, specializations and ideas. As an industry, we've seen that the way these technologies invent re-combine different building blocks has lead to many ongoing heated debates, rewrites of products and a continuous reinventing of the same building blocks that are needed in real-world applications hindering user-driven innovation.
+
+Storex aims to identify the building blocks that have been re-combined in various ways in different storage technologies and architectures, and provide the industry with modules providing a common way to speak about these issues (live schema migration, access control, offline-first, live-debugging micro-service architectures, etc.) in ways that they can be re-combined according to different use-cases.
+
+At the simplest level, this allows for applications to adapt to new storage architectures with drastically reduced effort, reducing the amount of re-writes (read: wasted energy and money that could have been used to produce value for society) and allowing for more research technologies which as a result have a greater chance to be adopted. Also, it allows for technologies to be chosen based on requirements emerging from high-fidelity prototyping and measurements, instead of up-front research when requirements are still vague. This enables a whole new level of user-driven development, and potentially changes the choice of technology from an (often not entirely rational) debate to data-driven application architecting. With this, and by creating a common tool-chain for traditionally conflicted communities (centralized vs. decentralized, SQL vs. NoSQL, etc.) we hope to increase the amount of unity in the tech industry, while reducing wasted resources.
+
 # How does Storex work?
 
 ```mermaid
