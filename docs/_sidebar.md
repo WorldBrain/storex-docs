@@ -2,6 +2,7 @@
 - [Guides](/guides/)
 
   - [Quickstarts](/guides/quickstarts/)
+  - [Storage registry](/guides/storage-registry/)
   - [Storage middleware](/guides/storage-middleware/)
   - [Storage modules](/guides/storage-modules/)
   - [GraphQL API](/guides/graphql-api/)
