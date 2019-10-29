@@ -3,7 +3,9 @@
 
   - [Quickstarts](/guides/quickstarts/)
   - [Storage registry](/guides/storage-registry/)
+  - [Storage operations](/guides/storage-operations/)
   - [Storage middleware](/guides/storage-middleware/)
+  - [Schema migrations](/guides/schema-migrations/)
   - [Storage modules](/guides/storage-modules/)
   - [GraphQL API](/guides/graphql-api/)
   - [Multi-device sync](/guides/multi-device-sync/)

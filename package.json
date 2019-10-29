@@ -3,9 +3,14 @@
   "repository": "git@github.com:WorldBrain/storex-docs.git",
   "private": true,
   "scripts": {
-    "start": "docsify serve docs"
+    "start": "docsify serve docs",
+    "maintainable-docs": "ts-node tools/maintainable-docs/main.ts"
   },
   "devDependencies": {
-    "docsify-cli": "^4.3.0"
+    "@types/node": "^12.11.7",
+    "docsify-cli": "^4.3.0",
+    "ts-node": "^8.4.1",
+    "typedoc": "^0.15.0",
+    "typescript": "^3.6.4"
   }
 }
