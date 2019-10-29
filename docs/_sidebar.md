@@ -1,4 +1,4 @@
-- [Home](/README.md)
+- [Home](/)
 - [Guides](/guides/)
 
   - [Quickstarts](/guides/quickstarts/)

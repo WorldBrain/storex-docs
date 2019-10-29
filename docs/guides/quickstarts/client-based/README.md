@@ -15,6 +15,8 @@ npm install storex storex-backend-dexie storex-pattern-modules
 Now somewhere in our application, we'll write some code to set up Storex and describe the data we're going to work with.
 
 ```js
+// storage.ts
+
 import StorageManager, {
   StorageBackend,
   StorageRegistry
@@ -33,7 +35,7 @@ export async function createStorage(options: {
     idbImplementation: options.backend === "in-memory" ? inMemory() : undefined
   });
 
-  const storageManager = new StorageManager({ backend: clientStorageBackend });
+  const storageManager = new StorageManager({ backend });
   storageManager.registry.registerCollections({
     user: {
       version: new Date("2019-10-10"),
