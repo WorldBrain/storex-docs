@@ -7,10 +7,18 @@
     "maintainable-docs": "ts-node tools/maintainable-docs/main.ts"
   },
   "devDependencies": {
+    "@types/colors": "^1.2.1",
+    "@types/glob": "^7.1.1",
+    "@types/marked": "^0.6.5",
     "@types/node": "^12.11.7",
     "docsify-cli": "^4.3.0",
     "ts-node": "^8.4.1",
     "typedoc": "^0.15.0",
     "typescript": "^3.6.4"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "glob": "^7.1.5",
+    "marked": "^0.7.0"
   }
 }

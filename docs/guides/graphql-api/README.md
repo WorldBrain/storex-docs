@@ -1,3 +1,3 @@
 # GraphQL API
 
-TBD
+Using Storex, you can create a clean interface between your storage logic and the rest of your application, such as your business logic and UI code. As a consequence of this, you can start developing your application entirely client-side and move your entire storage logic server-side when you need it. This was a clear design goal from the beginning for Storex, as in the early stages of a product you should be concentrating on prototyping functionality, not on choosing and managing implementation details like what kind of database your application uses or the layout of your REST/GraphQL API before you even know what your product is about!

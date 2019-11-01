@@ -124,7 +124,7 @@ All of this together, you can create rapidly iterate on highly flexible applicat
 
 # What next?
 
-If you're a developer and here for the first time, start exploring the [quickstarts](/guides/quickstarts/) and the rest of the [guides](/guides/). <!-- Be sure to check out the [Best practices](/best-practices/) after that though. -->
+If you're a developer and here for the first time, start exploring the [quickstart](/guides/quickstart/) and the rest of the [guides](/guides/). <!-- Be sure to check out the [Best practices](/best-practices/) after that though. -->
 
 <!-- If you want to see Storex working with the database of your choice, check out the guide on [creating a new storage backend](/advanced-usage/creating-storage-backend/) -->
 

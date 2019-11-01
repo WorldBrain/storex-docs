@@ -1,6 +1,8 @@
-# Creating a client-side only application
+# Quickstart
 
-We're going to start here with a single-user application, like a note taking app, or a knowledge management tool, that you'll be able to distribute as a static website (through S3 for example), a Web Extension or a React Native app. We'll start by using an in-memory database, so we can experiment freely without having to create, modify or delete repeatedly while iterating on our code. After that, we'll start using IndexedDB for the browser, and SQLite on React Native, so your data can be stored both in a web browser, and in a mobile app. Finally, we'll point you to some next steps, like adding multi-device Sync, or transforming your application into an offline-first cloud-based application.
+We're going to start getting familiar with Storex showing a single-user client-side application, like a note taking app, or a knowledge management tool, that you'll be able to distribute as a static website (through S3 for example), a Web Extension or a React Native app. We'll start by using an in-memory database, so we can experiment freely without having to create, modify or delete test data repeatedly while iterating on our code. After that, we'll start using IndexedDB for the browser, and SQLite on React Native, so your data can be stored both in a web browser, and in a mobile app.
+
+From there, you can we'll show you a number of directions you can take depending on what you're building, like running your storage code server-side in an SQL/MongoDB database, using Google Cloud Firestore as a back-end, or using sync if you want a single-user application that can sync between multiple devices.
 
 ## Installation
 
@@ -240,4 +242,4 @@ As a reference, you can find a boilerplate demonstating Storex using React in a 
 
 Now, you might want to do a few things, depending on your use cases. Modern application are expected to automatically sync between multiple devices. If you want to remain offline-first and are buidling a single-user application, but do want to sync between multiple devices, check out the [multi-device sync guide](/guides/multi-device-sync/).
 
-If, however, you're making a platform and thus need multiple users to interact with each other, you'll need a back-end. You can either do this with the [Google Cloud Firestore](https://github.com/WorldBrain/storex-backend-firestore) storage backend, or if you need more control, by moving some of your storage code server-side. Guides still need to be written for the first case, but for now, you can follow the [creating a cloud-based application](/guides/quckstarts/cloud-based/) guide for the second case.
+If, however, you're making a platform and thus need multiple users to interact with each other, you'll need a back-end. You can either do this with the [Google Cloud Firestore](https://github.com/WorldBrain/storex-backend-firestore) storage backend, or if you need more control, by moving some of your storage code server-side using an SQL/MongoDB database, or any other database for which storage backends are available (or you want to contribute.) A guide still need to be written for Firestore, but you can follow the [GraphQL API guide](/guides/graphql-api/) for moving your storage logic server-side.

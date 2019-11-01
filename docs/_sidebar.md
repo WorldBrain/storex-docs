@@ -1,7 +1,7 @@
 - [Home](/)
 - [Guides](/guides/)
 
-  - [Quickstarts](/guides/quickstarts/)
+  - [Quickstart](/guides/quicks/)
   - [Storage registry](/guides/storage-registry/)
   - [Storage operations](/guides/storage-operations/)
   - [Storage middleware](/guides/storage-middleware/)

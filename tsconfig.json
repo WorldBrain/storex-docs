@@ -1,0 +1,22 @@
+{
+  "version": "3.6",
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "strict": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "removeComments": true,
+    "lib": ["es2017", "dom", "esnext.asynciterable"],
+    "noLib": false,
+    "downlevelIteration": true,
+    "preserveConstEnums": true,
+    "declaration": true,
+    "sourceMap": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "typeRoots": ["./node_modules/@types"],
+    "outDir": "lib"
+  },
+  "filesGlob": ["./tools/**/*.ts", "!./node_modules/**/*.ts"]
+}
