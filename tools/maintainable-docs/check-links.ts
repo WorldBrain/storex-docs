@@ -94,6 +94,6 @@ export async function checkLinks() {
     }
 
     for (const error of errors) {
-        console.log(colors.red('ERROR:'), getHumanReadableError(error))
+        console.error(colors.red('ERROR:'), getHumanReadableError(error))
     }
 }
