@@ -110,6 +110,32 @@ Change in future:
 
 -->
 
-## Indices
+## Indices and primary keys
+
+You can set indices of single fields and combining multiple fields when registering a collection. As always, you should be careful to use the right indices when constructing your data model with the right trade-off between read speed, write speed and space consuption for your application. This will vary a lot depending on what you're trying to build, so it's your job to know your data model and storage technology underlying the storage backend you're using.
+
+```js
+export async function main() {
+  const storageManager = createStorageManager();
+  storageManager.registry.registerCollections({
+    note: {
+      version: new Date("2019-11-02"),
+      fields: {
+        createdWhen: { type: "timestamp" },
+        title: { type: "text" },
+        slug: { type: "string" },
+        body: { type: "text" }
+      },
+      indices: [
+        { field: "slug" }, // single-field index
+        { field: ["createdWhen", "slug"] } // multi-field index
+      ]
+    }
+  });
+  await storageManager.finishInitialization();
+}
+```
+
+TODO: primary keys
 
 ## Relationships
