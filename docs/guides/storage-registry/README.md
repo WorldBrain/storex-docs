@@ -28,6 +28,9 @@ export async function main() {
     }
   });
   await storageManager.finishInitialization();
+
+  // You can find the latest versions of all collections here
+  expect(storageManager.registry.collections['note']).toEqual(expect.any(Object))
 }
 ```
 
@@ -84,6 +87,11 @@ export async function main() {
     user: expect.any(Object),
     note: expect.any(Object)
   });
+
+  // You can find the latest versions of all collections here
+  expect(storageManager.registry.collections["note"]).toEqual(
+    expect.any(Object)
+  );
 }
 ```
 
@@ -133,9 +141,136 @@ export async function main() {
     }
   });
   await storageManager.finishInitialization();
+
+  // Insertion will probably be slowser, since 3 indices are affected
+  const { object } = await storageManager.operation("createObject", "note", {
+    createdWhen: Date.now(),
+    title: "First note",
+    slug: "first-note",
+    body: "Something important to remember"
+  });
+
+  // This will be fast, because the single-field index is used
+  expect(
+    await storageManager.operation("findObject", "note", {
+      slug: object.slug
+    })
+  ).toEqual(object);
+
+  // This will be fast, because the multi-field index is used
+  expect(
+    await storageManager.operation("findObject", "note", {
+      slug: object.slug,
+      createdWhen: { $lt: Date.now() }
+    })
+  ).toEqual(object);
 }
 ```
 
-TODO: primary keys
+By default, if you don't specify a primary key, an auto-generated primary key field called `id` is added to the collection. How this primary key is generated depends on the storage backend, but on SQL databases and IndexedDB this will typically be an incrementing integer, while on Firebase/Firestore this will be a (semi-)random string. You can specify a custom primary key field as follows:
+
+```js
+export async function main() {
+  const storageManager = createStorageManager();
+  storageManager.registry.registerCollections({
+    note: {
+      version: new Date("2019-11-02"),
+      fields: {
+        createdWhen: { type: "timestamp" },
+        title: { type: "text" },
+        slug: { type: "string" },
+        body: { type: "text" }
+      },
+      indices: [
+        { field: "slug", pk: true }, // this is now the primary key
+        { field: ["createdWhen", "slug"] }
+      ]
+    }
+  });
+  await storageManager.finishInitialization();
+
+  expect(storageManager.registry.collections["note"].pkField).toEqual("slug");
+}
+```
 
 ## Relationships
+
+All data you'll store will probably be connected with each other. Storex, for the time being allows you to express three kinds of relationships:
+
+- `singleChildOf` which in relational databases is called a one-to-one relationship, meaning that there will exist only one object of the collection you're defining for the parent you're pointing to. Think of a user having only one profile.
+- `childOf` which in relational databases is called a one-to-many relationship, meaning that there might be zero or more objects of the collection you're defining for the parent you're pointing to. Think of a user having potentially multiple e-mail addresses.
+- `connects` which is in relational databases is called a many-to-many relationship, meaning that an object of this collection connects two other objects. Think of a newsletter subscription connecting a user to a newsletter, while optionally containing information about the connection, like when the subscription was created.
+
+```js
+export async function main() {
+  const storageManager = createStorageManager();
+  storageManager.registry.registerCollections({
+    user: {
+      version: new Date("2019-11-02"),
+      fields: {
+        displayName: { type: "string" }
+      }
+    },
+    userProfile: {
+      version: new Date("2019-11-02"),
+      fields: {
+        city: { type: "string" }
+      },
+      relationships: [{ singleChildOf: "user" }]
+    },
+    userEmail: {
+      version: new Date("2019-11-02"),
+      fields: {
+        address: { type: "string" }
+      },
+      relationships: [{ childOf: "user" }]
+    },
+    newsletter: {
+      version: new Date("2019-11-02"),
+      fields: {
+        title: { type: "string" }
+      }
+    },
+    newsletterSubscription: {
+      version: new Date("2019-11-02"),
+      fields: {
+        subscribedWhen: { type: "timestamp" }
+      },
+      relationships: [{ connects: ["user", "newsletter"] }]
+    }
+  });
+  await storageManager.finishInitialization();
+
+  const { object: user } = await storageManager.operation(
+    "createObject",
+    "user",
+    { displayName: "Brian" }
+  );
+  const { object: profile } = await storageManager.operation(
+    "createObject",
+    "userProfile",
+    { user: user.id, hometown: "London" }
+  );
+  const { object: email } = await storageManager.operation(
+    "createObject",
+    "userEmail",
+    { user: user.id, address: "life@brian.com" }
+  );
+  const { object: newsletter } = await storageManager.operation(
+    "createObject",
+    "newsletter",
+    { title: "Life of Brian" }
+  );
+  const { object: subscription } = await storageManager.operation(
+    "createObject",
+    "newsletterSubscription",
+    { user: user.id, newsletter: newsletter.id, subscribedWhen: Date.now() }
+  );
+}
+```
+
+Notice the ID(s) of the target object(s) of the child or connection, like the user of the profile, or the user and newsletters of the subscription, are passed in as the name of the target collection. You can change this by setting the `alias` property on a `singleChildOf` or `childOf` relationship, the `aliases: [string, string]` propery on a `connects` relationship.
+
+## What next?
+
+If you're exploring Storex for the first time, now that you know how to define your data models, you'll probably want to visit the [storage operations guide](/guide/storage-operations/) to how to query and manipulate your data.
