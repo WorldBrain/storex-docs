@@ -79,7 +79,7 @@ function getHumanReadableError(error: DocumentError): string {
     }
 }
 
-export async function checkLinks() {
+export default async function checkLinks() {
     const rootDir = path.join(__dirname, '../../docs')
 
     const errors: DocumentError[] = []

@@ -42,7 +42,8 @@ export async function createStorage(options: {
     user: {
       version: new Date("2019-10-10"),
       fields: {
-        displayName: { type: "string" }
+        displayName: { type: "string" },
+        age: { type: "int", optional: true }
       }
     },
     todoList: {
@@ -84,24 +85,30 @@ Each collection is versioned with a Date, and you can pass an array of collectio
 Now that we've set up the storage, we can execute basic operations on it:
 
 ```js
-const storage = await createStorage({ backend: "in-memory" });
-const { object: user } = await storage.manager.operation(
-  "createObject",
-  "user",
-  { displayName: "Bob" }
-);
-const { object: list } = await storage.manager.operation(
-  "createObject",
-  "list",
-  { user: user.id, title: "My todo list" }
-);
-const { object: list } = await storage.manager.operation(
-  "updateObject",
-  "list",
-  { id: list.id }, // filter
-  { tille: "Updated title" } // updates
-);
-await storage.manager.operation("deleteObject", "list", { id: list.id });
+export async function demo() {
+  const storage = await createStorage({ backend: "in-memory" });
+  const { object: user } = await storage.manager.operation(
+    "createObject",
+    "user",
+    { displayName: "Bob" }
+  );
+  const { object: list } = await storage.manager.operation(
+    "createObject",
+    "list",
+    { user: user.id, title: "My todo list" }
+  );
+  const { object: list } = await storage.manager.operation(
+    "updateObject",
+    "list",
+    { id: list.id }, // filter
+    { tille: "Updated title" } // updates
+  );
+  await storage.manager.operation(
+    "deleteObject",
+    "list",
+    { id: list.id } // filter
+  );
+}
 ```
 
 For the full list of standard storage operations, see [the storage operations guide](/guides/storage-operations/). To see you can implement custom operations, and how the standardization process work, see [the custom storage operations guide](/advanced-usage/custom-storage-operations/).

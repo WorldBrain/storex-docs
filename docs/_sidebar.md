@@ -5,14 +5,15 @@
   - [Storage registry](/guides/storage-registry/)
   - [Storage operations](/guides/storage-operations/)
   - [Storage middleware](/guides/storage-middleware/)
-  - [Schema migrations](/guides/schema-migrations/)
   - [Storage modules](/guides/storage-modules/)
+  - [Schema migrations](/guides/schema-migrations/)
   - [GraphQL API](/guides/graphql-api/)
   - [Multi-device sync](/guides/multi-device-sync/)
-  - [TypeScript generator](/guides/typescript-generator/)
 
+<!--
 - [Best practices](/best-practices/)
 - [Advanced usage](/advanced-usage/)
 - [Use cases](/use-cases/)
 - [Case studies](/case-studies/)
 - [Resources](/resources/)
+-->

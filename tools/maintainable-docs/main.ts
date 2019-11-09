@@ -1,46 +1,6 @@
-import fs from 'fs'
-import * as TypeDoc from 'typedoc'
-import { checkLinks } from './check-links';
-
-export interface DocumentationObject {
-    children: any[]
-}
-
-export function generateDocumentationObject(rootPath: string): DocumentationObject | null {
-    const app = new TypeDoc.Application({
-        mode: 'Modules',
-        logger: 'console',
-        target: 'ES5',
-        module: 'CommonJS',
-        experimentalDecorators: true,
-        typeRoots: [
-            rootPath + "/node_modules/@types"
-        ],
-    });
-
-    const project = app.convert(app.expandInputFiles([rootPath + '/ts']));
-
-    if (project) { // Project may not have converted correctly
-        const tempFilePath = '/tmp/documentation.json'
-
-        // Alternatively generate JSON output
-        app.generateJson(project, tempFilePath)
-
-        return JSON.parse(fs.readFileSync(tempFilePath).toString())
-    } else {
-        return null
-    }
-}
-
-export function findDocumentationModule(documentationObject: DocumentationObject, moduleName: string) {
-    for (const child of documentationObject.children) {
-        if (child.kindString === 'External module' && child.name === `"${moduleName}"`) {
-            return child
-        }
-    }
-
-    return null
-}
+import generateApiReference from './api-reference-generation';
+import checkLinks from './check-links';
+import checkCoverage from './check-coverage';
 
 function usageError(message: string) {
     console.error(message)
@@ -52,19 +12,18 @@ export async function main() {
     if (!command) {
         return usageError('Error: no command specified (must be either check-links or check-coverage)')
     }
-    if (['check-links', 'check-coverage'].indexOf(command) === -1) {
+    if (['check-links', 'check-coverage', 'generate-reference'].indexOf(command) === -1) {
         return usageError(`Error: unknown command '${command}'`)
     }
 
     if (command === 'check-coverage') {
-        const documentationObject = generateDocumentationObject(process.argv[3])
-        if (!documentationObject) {
-            return
-        }
-        console.log(documentationObject)
-        console.log(findDocumentationModule(documentationObject, 'types/relationships'))
+        const rootPath = process.argv[3]
+        await checkCoverage(rootPath)
     } else if (command === 'check-links') {
         await checkLinks()
+    } else if (command === 'generate-reference') {
+        const rootPath = process.argv[3]
+        await generateApiReference(rootPath)
     }
 }
 

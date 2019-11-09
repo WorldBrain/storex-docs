@@ -2616,7 +2616,14 @@ typedoc-default-themes@^0.6.0:
     lunr "^2.3.6"
     underscore "^1.9.1"
 
-typedoc@^0.15.0:
+typedoc-neo-theme@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/typedoc-neo-theme/-/typedoc-neo-theme-1.0.4.tgz#e3d4efb29b064f8010a679beb1333b6203e3361a"
+  integrity sha512-rFY/MADGP+X45mrhHcmqBAZ1lQ0//goCaLiGnKK/PCZLB1+01YjQedsQHZp0r79ojm4LPNtiAm9SNG9/RHUjag==
+  dependencies:
+    typedoc "0.15.0"
+
+typedoc@0.15.0, typedoc@^0.15.0:
   version "0.15.0"
   resolved "https://registry.yarnpkg.com/typedoc/-/typedoc-0.15.0.tgz#21eaf4db41cf2797bad027a74f2a75cd08ae0c2d"
   integrity sha512-NOtfq5Tis4EFt+J2ozhVq9RCeUnfEYMFKoU6nCXCXUULJz1UQynOM+yH3TkfZCPLzigbqB0tQYGVlktUWweKlw==
