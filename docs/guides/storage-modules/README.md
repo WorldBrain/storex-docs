@@ -88,24 +88,64 @@ class TodoListStorage extends StorageModule {
 
 Additionally, the `@worldbrain/storex-pattern-modules` package provides a `withHistory()` helper function, that you can use to separate your entire schema history in a more convenient way. See [this](https://github.com/WorldBrain/storex-frontend-boilerplate/blob/2bf0ca5ecdcfdae3abbe2e2ded619a6f4f109a30/src/storage/modules/todo-list.ts) and [this](https://github.com/WorldBrain/storex-frontend-boilerplate/blob/2bf0ca5ecdcfdae3abbe2e2ded619a6f4f109a30/src/storage/modules/todo-list.history.ts) file of the [Storex front-end boilerplate](https://github.com/WorldBrain/storex-frontend-boilerplate) for example usage.
 
-Collection versioning works by versioning your collection with the schema version of you application. When you have two collection with version `2019-10-10`, and you add a third one with version `2019-10-20`, you'll have two application schema versions: 1) `2019-10-10` containing two collections, and `2019-10-20` containing three collections. But when want to package storage modules for inclusion in other applcations, the collections in that package will have their independent versioning. For this, there's the `mapCollectionVersions()` helper function, which can map module collection versions to versions of the application that uses them. See [here](https://github.com/WorldBrain/Memex/blob/dd66472feb73af86e2952d343937988f9b25771a/src/sync/background/storage.ts) for an example of Memex using this function to integrate [multi-device sync](/guides/multi-device-sync/).
+Collection versioning works by versioning your collection with the schema version of you application. When you have two collection with version `2019-10-10`, and you add a third one with version `2019-10-20`, you'll have two application schema versions: 1) `2019-10-10` containing two collections, and 2) `2019-10-20` containing three collections. But when want to package storage modules for inclusion in other applcations, the collections in that package will have their independent versioning. For this, there's the `mapCollectionVersions()` helper function, which can map module collection versions to versions of the application that uses them. See [here](https://github.com/WorldBrain/Memex/blob/dd66472feb73af86e2952d343937988f9b25771a/src/sync/background/storage.ts) for an example of Memex using this function to integrate [multi-device sync](/guides/multi-device-sync/).
 
 ## Executing operations
+
+Storage modules allow you to specify which operations your storage methods are using in a discoverable way. This allows you for example to write an automatic tool that scans your entire program for inefficient access patterns, or diagrams about where you're interacting with your data in which ways.
+
+```js
+import {
+  StorageModule,
+  StorageModuleConfig,
+  registerModuleMapCollections
+} from "@worldbrain/storex-pattern-modules";
+
+class TodoListStorage extends StorageModule {
+  getConfig(): StorageModuleConfig {
+    return {
+      collections: {
+        todoList: {
+          version: new Date("2019-10-11"),
+          fields: {
+            title: { type: "text" }
+          }
+        }
+      },
+      operations: {
+        findListById: {
+          operation: "findObject",
+          collection: "todoList",
+
+          // The rest of the arguments passed to the StorageManager.operation()
+          // String starting with $ represent placeholders filled in when
+          // executing the operation.
+          args: [{ id: "$id" }]
+        },
+        createList: {
+          // Since createObject always takes the same, predictable `args`,
+          // they are filled in automatically
+          operation: "createObject",
+          collection: "todoList"
+        }
+      }
+    };
+  }
+
+  async getList(id: string | number) {
+    // The second argument to `this.operation()` are the substitutions
+    // that'll be used to fill in the placeholder defined above in `args`
+    return this.operation("findListById", { id });
+  }
+
+  async createList(list: { title: string }) {
+    return this.operation("createList", list);
+  }
+}
+```
+
+One other advantage of this thin abstraction is that you can specify how the operations are executed for each storage module. [This](https://github.com/WorldBrain/storex-pattern-modules/blob/877909b37c81e59b7743b0ee3c3160dfa5fe69dd/ts/index.ts#L83) is the implementation of the default `operationExecutor`, but you can pass in a custom one in [the constructor](https://github.com/WorldBrain/storex-pattern-modules/blob/877909b37c81e59b7743b0ee3c3160dfa5fe69dd/ts/index.ts#L23) of a storage module. One application of this would be to detect slow operation executions and logging them, knowing which storage module executed it and what the operation name was. Also, there is an experimental [module spy](https://github.com/WorldBrain/storex-pattern-modules/blob/877909b37c81e59b7743b0ee3c3160dfa5fe69dd/ts/spy.test.ts) that allows the `storageExecutor` to detect from which method the operation was executed. (NOTE: the module spy class is not stable yet, so feel free to contribute to it for that to happen.)
 
 ## Storage module methods
 
 ## Access rules
-
-<!--
-
-- intro
-- collections
-  - history
-  - version mapping
-  - registering collections
-- operations
-  - pluggable storage executor
-- methods
-- access rules
-
--->

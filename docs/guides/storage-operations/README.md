@@ -4,7 +4,7 @@ If you've read the [quickstart guide](/guides/quickstart/), you've seen that dat
 
 ## Standard operations
 
-Whatever storage backend you'll be working with, you'll be creating, updating, deleting and querying data. Respectively, these are the `createObject`, `updateObjects`, `deleteObjects` and `findObjects` operations. You'll find examples of how to use these in the [quickstart guide](/guides/quickstart/). What isn't shown there however, is how the filters used by the update, delete and find operations work. These filters are inspired by MongoDB filters, with the following supported operators:
+Whatever storage backend you'll be working with, you'll be creating, updating, deleting and querying data. Respectively, these are the `createObject`, `updateObjects`, `deleteObjects` and `findObject(s)` operations. You'll find examples of how to use these in the [quickstart guide](/guides/quickstart/). What isn't shown there however, is how the filters used by the update, delete and find operations work. These filters are inspired by MongoDB filters, with the following supported operators:
 
 ```js
 // builds on quickstart setup
