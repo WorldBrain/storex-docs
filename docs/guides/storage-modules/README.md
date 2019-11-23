@@ -148,4 +148,67 @@ One other advantage of this thin abstraction is that you can specify how the ope
 
 ## Storage module methods
 
+In the example above, we have the `getList()` and `createList()` methods of the storage module. These are the methods that the rest of your application uses to interact with your data instead of directly using the storage manager. In addition to allowing you in this way to remove Storex entirely from your program if you wish to do so, with a little bit of extra description of these methods we seemlessly move these storage module server-side and communicate with it using an automatically generated [GraphQL API](/guides/graphql-api/), or any other communication protocol you might want to implement (REST, WebSockets, TCP sockets, WebRTC, etc.) The underlying idea is that the transport layer you use to let systems communicate should be an implementation detail, not something that's dominant throughout your entire application (like most GraphQL tutorials that teach people to directly embed GraphQL in their UI code.)
+
+A description of your methods looks like this:
+
+```js
+class UserAdminModule extends StorageModule {
+  getConfig = (): StorageModuleConfig => ({
+    collections: {
+      user: {
+        version: new Date("2019-01-01"),
+        fields: {
+          name: { type: "string" },
+          age: { type: "int" }
+        }
+      }
+    },
+    operations: {
+      findByName: {
+        operation: "findObject",
+        collection: "user",
+        args: { name: "$name:string" }
+      },
+      updateAgeByName: {
+        operation: "updateObjects",
+        collection: "user",
+        args: [{ name: "$name:string" }, { age: "$age:int" }]
+      }
+    },
+    methods: {
+      byName: {
+        type: "query",
+        args: { name: "string" },
+        returns: { collection: "user" }
+      },
+      setAgeByName: {
+        type: "mutation",
+        args: { name: "string", age: "int" },
+        returns: { collection: "user" }
+      }
+    }
+  });
+
+  async byName(args: { name: string }) {
+    return this.operation("findByName", args);
+  }
+
+  async setAgeByName(args: { name: string, age: number }) {
+    await this.operation("updateAgeByName", args);
+    return this.byName(args);
+  }
+}
+```
+
+More examples can be found in the [GraphQL schema tests](https://github.com/WorldBrain/storex-graphql-schema/blob/81611b84d480629ab22963f85452b281b4461c80/ts/modules.test.ts). Currently, GraphQL is the only transport protocol implemented, for which you can find usage instruction [here](/guides/graphql-api/).
+
 ## Access rules
+
+As soon as you're creating multi-user systems, whether that means a back-end for your web application, or a P2P system, you'll need to manage who can do what. For this, Storex provides a technology-independent way of describing who is allowed to execute what operations on what data. This system is still in it's early beginnings, and for now only supports [compilation](https://github.com/WorldBrain/storex-backend-firestore/blob/fad40f3701268543b48b6e0e1976fcd651599243/ts/security-rules/index.test.ts) to [Firestore access rules](https://firebase.google.com/docs/firestore/security/get-started). An `operationExecutor` or a storage middleware to enforce these rules in Node.js environments is planned. Also planned are access rules based on methods, rather than operations.
+
+The end goal of access rules is to create a common ground where possible for access control, portable to multiple system architectures and maybe most important of all, sharing a common toolset to work with access control, including automated testing for unforeseen scenarios, visualization and manual testing.
+
+## What's next?
+
+Now that you have a grasp of the all the basics that together allow for a very flexible application architecture, you'll probably want to check out the [schema migrations guide](/guides/schema-migrations/).

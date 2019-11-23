@@ -1,3 +1,25 @@
 # Schema migrations
 
-TBD
+As your application evolves, so does your data model. And, each application architecture requires a different a different approach to that. Live schema migrations on a heavily-used SQL-based back-end are very different beasts than offline, single-user applications. This is why the schema migration system in Storex allows you to describe how your data changes, rather than having you code it out in commands. This way, you can choose different strategies of executing these migrations. This whole system is inspired by the article [evolutionary database design](https://www.martinfowler.com/articles/evodb.html) and experiences using different database system and abstraction layers.
+
+The `@worldbrain/storex-schema-migrations` [package](https://github.com/WorldBrain/storex-schema-migrations) contains these different sub-packages, which can be recombined according to your needs:
+
+- `schema-diff` takes your `StorageRegistry`, a base version and a target version, returning a `SchemaDiff` telling you which collections and fields have been added, changed and removed.
+- `migration-generator` takes a `SchemaDiff` and a declaration of what kind of operations you need to be done (like concatenating a firstName and lastName into a displayName), returing a `SchemaMigration` which a sequence of steps to execute, like adding a field, writing a value to a field, removing a field, etc. The `SchemaMigration` is divided into the `prepare`, `data` (manipulation) and `finish` phases, which is useful so you can execute these steps in different moments during your application update.
+- `migration-schema` combines two version a storage migrations to include collections and fields of a schema both pre- and post-migration. This is useful when you want to execute a migration and need to read from the old fields and write to the new fields.
+- `migration-runner` is one way of executing these migrations in a synchronous way, which can be useful from data sets that are small enough.
+
+Some examples of how these can be re-combined (none of these are coded out yet):
+
+- **Using IndexDB client-side with the Dexie storage back-end** there is no need to explictly add and remove fields, since Dexie does that automatically based on the versions you've defined. However, you can use the `migration-generator` package to describe the migration in a standard way and execute it synchronously with the `migration-runner`. Or, you might choose to take that migration and perform these migration live as you read and write data from the database.
+- **Migrating the schema of an SQL database with zero downtime** requires us to take into account that old versions of our application operating on the old version of a schema, will co-exist with new versions of our application operating against the new version of the schema. For a lot of database refactorings, it would not be hard to automate the process described [here](https://www.martinfowler.com/articles/evodb.html#TransitionPhase) while you route your database writes to the new version of your application, while routing reads to the old version of your application.
+- **Firestore migrations** could be implemented using Cloud Functions that run in the background responding to writes by old client versions and automatically migrates them to the new data structure, meaning that you can accomodate the fact that when you deploy a new version of your application, there might be a lot of users still running your old code for a while.
+- **Generating an SQL script to be reviewed and executed by a DBA** might be something required by some organizations. This would mean feeding the output of the `migration-generator` to an SQL generator.
+
+## Status of this package
+
+Although the base of this package is there, there's still some work needed for this to be ready for production, after which more detailed documentation will be available. This includes some cleaning up of the naming of the types in the package, and the addition of functionality needed for the cases where you want to split out subcollections (a big user collection into a separate user profile collection for example), or join small ones into bigger ones.
+
+## What next?
+
+If you haven't yet checked it out, take a look at the [GraphQL API generation guide](/guide/graphql-api/) to see how Storex allows you to quickly develop your application in memory without having to spin up an application server or database instances, after which when you're ready you can use the same code and move it server-side with mininal effort. Or, you might want to check out the [multi-device sync guide](/guide/multi-device-sync/) describing how you can make client-side single-user applications that a user can use across multiple devices without a full-fledged back-end.
