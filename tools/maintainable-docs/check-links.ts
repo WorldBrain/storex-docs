@@ -3,6 +3,7 @@ import path from 'path'
 import glob from 'glob'
 import marked from 'marked'
 import colors from 'colors/safe'
+import fetch, { Response, FetchError } from 'node-fetch'
 
 interface MarkdownLink {
     href: string
@@ -13,7 +14,10 @@ interface MarkdownLink {
 type DocumentError = { absDocumentPath: string } & (
     { type: 'internal-link.target-absent', link: MarkdownLink } |
     { type: 'internal-link.no-trailing-slash', link: MarkdownLink } |
-    { type: 'internal-link.relative-url-forbidden', link: MarkdownLink }
+    { type: 'internal-link.relative-url-forbidden', link: MarkdownLink } |
+    { type: 'external-link.not-found', link: MarkdownLink } |
+    { type: 'external-link.not-ok', link: MarkdownLink } |
+    { type: 'external-link.error', link: MarkdownLink, error: FetchError }
 )
 
 async function getMarkdownDocumentPaths(args: { rootDir: string }): Promise<string[]> {
@@ -57,7 +61,7 @@ async function checkMarkdownLink(args: { rootDir: string, absDocumentPath: strin
     const parsedUrl = new URL(href, `https://${originalHost}/storex-docs/`)
 
     if (parsedUrl.host !== originalHost) {
-        return null
+        return checkExternalLink(args)
     }
 
     if (parsedUrl.pathname.charAt(0) !== '/') {
@@ -77,6 +81,25 @@ async function checkMarkdownLink(args: { rootDir: string, absDocumentPath: strin
     return null
 }
 
+async function checkExternalLink(args: { absDocumentPath: string, link: MarkdownLink }): Promise<DocumentError | null> {
+    console.log(`Check external link:`, args.link.href)
+
+    let response: Response
+    try {
+        response = await fetch(args.link.href)
+    } catch (error) {
+        return { type: 'external-link.error', error, ...args }
+    }
+    if (!response.ok) {
+        if (response.status === 400) {
+            return { type: 'external-link.not-found', ...args }
+        } else {
+            return { type: 'external-link.not-ok', ...args }
+        }
+    }
+    return null
+}
+
 function getHumanReadableError(error: DocumentError): string {
     if (error.type === 'internal-link.no-trailing-slash') {
         return `${error.absDocumentPath} - found link without trailing slash: ${error.link.href}`
@@ -85,25 +108,27 @@ function getHumanReadableError(error: DocumentError): string {
     } else if (error.type === 'internal-link.relative-url-forbidden') {
         return `${error.absDocumentPath} - found relative link, but all links must be absolute: ${error.link.href}`
     } else {
-        throw new Error(`Unknown error while doing basic sanity checks`)
+        return `${error.absDocumentPath} - non-human-readable error checking this link: ${error.link.href}`
     }
 }
 
 export default async function checkLinks() {
     const rootDir = path.join(__dirname, '../../docs')
 
-    const errors: DocumentError[] = []
-    for (const absDocumentPath of await getMarkdownDocumentPaths({ rootDir })) {
+    const docPaths = await getMarkdownDocumentPaths({ rootDir })
+    const errors: DocumentError[][] = await Promise.all(docPaths.map(async absDocumentPath => {
         const content = fs.readFileSync(absDocumentPath).toString()
         const checkResult = await checkMarkdownDocument({
             rootDir,
             absDocumentPath,
             content
         })
-        errors.push(...checkResult.errors)
-    }
+        return checkResult.errors
+    }))
 
-    for (const error of errors) {
-        console.error(colors.red('ERROR:'), getHumanReadableError(error))
+    for (const errorSet of errors) {
+        for (const error of errorSet) {
+            console.error(colors.red('ERROR:'), getHumanReadableError(error))
+        }
     }
 }

@@ -99,7 +99,7 @@ async function main() {
 
 ## Accepting remote operations from other applications
 
-At this point, you can start doing useful things with the `client`. One of them, since we've told Storex Hub we're a remote application, is to accept remote operations. Normally, remote operations are standard [Storex operations](http://localhost:3000/#/guides/storage-operations/) like `createObject`, `findObjects`, etc. that you can directly feed into your own Storex storage set up (like an SQLite or Firestore database), but really you could implement whatever operations you see fit. This is an example with an in-memory Dexie database, for which we'll change a few things:
+At this point, you can start doing useful things with the `client`. One of them, since we've told Storex Hub we're a remote application, is to accept remote operations. Normally, remote operations are standard [Storex operations](/guides/storage-operations/) like `createObject`, `findObjects`, etc. that you can directly feed into your own Storex storage set up (like an SQLite or Firestore database), but really you could implement whatever operations you see fit. This is an example with an in-memory Dexie database, for which we'll change a few things:
 
 ```js
 import StorageManager, {
