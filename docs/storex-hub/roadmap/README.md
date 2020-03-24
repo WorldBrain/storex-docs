@@ -47,3 +47,7 @@ Convenience for users:
 - Automated backups
 - Data history
 - Multi-device sync with multiple providers
+
+## Interested in collaborating?
+
+There's many ways to help the development of Storex Hub. [Here](/guides/storex-hub/contact/) you can discover what you could do and how to get in touch with us.

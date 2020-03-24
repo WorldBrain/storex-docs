@@ -24,10 +24,6 @@ Aside from that, there are many more things that'd be awesome for users and deve
 Check out the [getting started guide](/storex-hub/getting-started/) to start playing around with Storex Hub.
 
 <!--
-- high level technical description of what Storex Hub is, and what problems it tries to solve now (and in the future)
-- An example on use cases now
-- A guide on how to set everything up
 - A guide on the API enpoints
-- Feature roadmap
 - Contacts to get in touch
 -->
