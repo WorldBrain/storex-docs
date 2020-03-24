@@ -1,6 +1,6 @@
 # Multi device sync
 
-Sometimes you want to keep data client-side, but still want to synchronize data between multiple user device to provide a seamless user experience. The [storex-sync package](https://github.com/WorldBrain/storex-sync/) provides this functionality in a unique, modular and surprisingly easy to understand way. That being said, synchronizing data is a really hard problem, and the default synchronization algorithm might not be for you. As such, you're encouraged to dive and fully understand the source code of this package before integrating it into your own application. For this, you'll need to understand the contents in the [quickstart](/guides/quickstart/), [storage registry](/guides/storage-registry/), [storage operations](/guides/storage-operations), [storage middleware](/guides/storage-middleware/) and [storage modules](/guides/storage-modules/) guides.
+Sometimes you want to keep data client-side, but still want to synchronize data between multiple user device to provide a seamless user experience. The [storex-sync package](https://github.com/WorldBrain/storex-sync/) provides this functionality in a unique, modular and surprisingly easy to understand way. That being said, synchronizing data is a really hard problem, and the default synchronization algorithm might not be for you. As such, you're encouraged to dive and fully understand the source code of this package before integrating it into your own application. For this, you'll need to understand the contents in the [quickstart](/guides/quickstart/), [storage registry](/guides/storage-registry/), [storage operations](/guides/storage-operations/), [storage middleware](/guides/storage-middleware/) and [storage modules](/guides/storage-modules/) guides.
 
 **IMPORTANT:** This functionality is still being developed and the most recent versions are not released yet. Therefore, we'll only explain how it works here and update the documentation as the codebase stabilizes enough (battle-testing it in [Memex](https://worldbrain.io/)) to be properly released.
 
@@ -25,7 +25,7 @@ The initial sync is simple and brute-force. You first open a channel between two
 When you set up Storex, you:
 
 - create client sync log, where all the changes to the client database will be written.
-- install a [storage middleware](/guides/storage-middleware) that intercept your operations and both executes and logs them in one automical operation
+- install a [storage middleware](/guides/storage-middleware/) that intercept your operations and both executes and logs them in one automical operation
 
 There's one problem here though. If we just send object around which have sequentially incrementing primary keys, data will end up being overwritten. To prevent this, you can either make sure your data doesn't have these kinds of primary keys (choosing other fields for your primary keys), or generate globally unique UUIDs for objects with automatically generated primary keys. This can be done using the `CustomAutoPkMiddleware` and for example the [uuid/v4](https://www.npmjs.com/package/uuid) package.
 

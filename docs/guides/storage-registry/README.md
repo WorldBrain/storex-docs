@@ -261,11 +261,13 @@ export async function main() {
     "newsletter",
     { title: "Life of Brian" }
   );
-  const { object: subscription } = await storageManager.operation(
-    "createObject",
-    "newsletterSubscription",
-    { user: user.id, newsletter: newsletter.id, subscribedWhen: Date.now() }
-  );
+  const {
+    object: subscription
+  } = await storageManager.operation("createObject", "newsletterSubscription", {
+    user: user.id,
+    newsletter: newsletter.id,
+    subscribedWhen: Date.now()
+  });
 }
 ```
 
@@ -273,4 +275,4 @@ Notice the ID(s) of the target object(s) of the child or connection, like the us
 
 ## What next?
 
-If you're exploring Storex for the first time, now that you know how to define your data models, you'll probably want to visit the [storage operations guide](/guide/storage-operations/) to how to query and manipulate your data.
+If you're exploring Storex for the first time, now that you know how to define your data models, you'll probably want to visit the [storage operations guide](/guides/storage-operations/) to how to query and manipulate your data.

@@ -50,4 +50,4 @@ Convenience for users:
 
 ## Interested in collaborating?
 
-There's many ways to help the development of Storex Hub. [Here](/guides/storex-hub/contact/) you can discover what you could do and how to get in touch with us.
+There's many ways to help the development of Storex Hub. [Here](/storex-hub/contact/) you can discover what you could do and how to get in touch with us.

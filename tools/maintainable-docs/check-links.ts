@@ -12,7 +12,8 @@ interface MarkdownLink {
 
 type DocumentError = { absDocumentPath: string } & (
     { type: 'internal-link.target-absent', link: MarkdownLink } |
-    { type: 'internal-link.no-trailing-slash', link: MarkdownLink }
+    { type: 'internal-link.no-trailing-slash', link: MarkdownLink } |
+    { type: 'internal-link.relative-url-forbidden', link: MarkdownLink }
 )
 
 async function getMarkdownDocumentPaths(args: { rootDir: string }): Promise<string[]> {
@@ -52,14 +53,21 @@ async function parseMarkdownDocument(args: { rootDir: string; absDocumentPath: s
 
 async function checkMarkdownLink(args: { rootDir: string, absDocumentPath: string, link: MarkdownLink }): Promise<DocumentError | null> {
     const href = args.link.href
-    if (href.charAt(0) !== '/') {
+    const originalHost = 'worldbrain.github.io'
+    const parsedUrl = new URL(href, `https://${originalHost}/storex-docs/`)
+
+    if (parsedUrl.host !== originalHost) {
         return null
     }
-    if (href.substr(-1) !== '/') {
+
+    if (parsedUrl.pathname.charAt(0) !== '/') {
+        return { type: 'internal-link.relative-url-forbidden', ...args }
+    }
+    if (parsedUrl.pathname.substr(-1) !== '/') {
         return { type: 'internal-link.no-trailing-slash', ...args }
     }
 
-    const targetDirWithTrailingSlash = path.join(args.rootDir, href.substr(1))
+    const targetDirWithTrailingSlash = path.join(args.rootDir, parsedUrl.pathname.substr(1))
     const targetFilePath = path.join(targetDirWithTrailingSlash, 'README.md')
     const targetExists = fs.existsSync(targetFilePath)
     if (!targetExists) {
@@ -73,7 +81,9 @@ function getHumanReadableError(error: DocumentError): string {
     if (error.type === 'internal-link.no-trailing-slash') {
         return `${error.absDocumentPath} - found link without trailing slash: ${error.link.href}`
     } else if (error.type === 'internal-link.target-absent') {
-        return `${error.absDocumentPath} - to non-existent document: ${error.link.href}`
+        return `${error.absDocumentPath} - found link to non-existent document: ${error.link.href}`
+    } else if (error.type === 'internal-link.relative-url-forbidden') {
+        return `${error.absDocumentPath} - found relative link, but all links must be absolute: ${error.link.href}`
     } else {
         throw new Error(`Unknown error while doing basic sanity checks`)
     }

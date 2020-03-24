@@ -111,7 +111,7 @@ export async function demo() {
 }
 ```
 
-For the full list of standard storage operations, see [the storage operations guide](/guides/storage-operations/). To see you can implement custom operations, and how the standardization process work, see [the custom storage operations guide](/advanced-usage/custom-storage-operations/).
+For the full list of standard storage operations, see [the storage operations guide](/guides/storage-operations/). To see you can implement custom operations, see [custom storage operations](/guides/storage-operations/?id=custom-operations).
 
 ## Organizing your application into storage modules
 
