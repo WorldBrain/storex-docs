@@ -13,8 +13,8 @@
 - Storex Hub
 
   - [Overview](/storex-hub/)
-  - [API reference](/storex-hub/api-reference/)
   - [Getting started](/storex-hub/getting-started/)
+  - [API reference](/storex-hub/api-reference/)
   - [Roadmap](/storex-hub/roadmap/)
   - [Get in touch](/storex-hub/contact/)
 
