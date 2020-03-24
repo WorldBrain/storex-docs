@@ -10,6 +10,12 @@
   - [GraphQL API](/guides/graphql-api/)
   - [Multi-device sync](/guides/multi-device-sync/)
 
+- Storex Hub
+
+  - [Overview](/storex-hub/)
+  - [Getting started](/storex-hub/getting-started/)
+  - [Roadmap](/storex-hub/roadmap/)
+
 <!--
 - [Best practices](/best-practices/)
 - [Advanced usage](/advanced-usage/)
