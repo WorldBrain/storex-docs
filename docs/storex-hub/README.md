@@ -9,7 +9,7 @@ Storex was built to address the needs of [Memex](https://getmemex.com), a web re
 
 ## Current state and the near future
 
-Currently, Storex Hub is a local server, started from the command line, that multiple applications can connect to and 1) query/manipulate the data of other applications, and 2) process requests by other application to query/manipulate their data. This means that one application can store it's data in IndexedDB running on Javacript, while another application could be based on Python and store its data in some service in the cloud, while communicating in a simple and standardized way.
+Currently, Storex Hub is a local server, started from the command line, that multiple applications can connect to from their own processes using either REST/Websocket and 1) query/manipulate the data of other applications, and 2) process requests by other application to query/manipulate their data. This means that one application can store it's data in IndexedDB running on Javacript, while another application could be based on Python and store its data in some service in the cloud, while communicating in a simple and standardized way.
 
 Once this functionality is stable, we'd like applications to be able store their data directly in Storex Hub, so we can gradually move toward data being stored independently for their apps (e.g. my contact list instead of the contact list stored in my CRM app, my e-mail client, etc.) This'd require a solid permission model, infrastucture to deal with schema changes, etc.
 

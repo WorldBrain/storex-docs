@@ -1,5 +1,9 @@
 # Getting started with Storex Hub
 
+Storex Hub is a Node.js server meant to run on the device(s) of its users, providing a REST/Socket.io API for other applications to connect to. As such, first we'll download and run Storex Hub, after which we'll write and run separate apps connecting to it.
+
+## Install and run
+
 First, clone the Storex Hub repository, install the dependencies with `npm install`, then run this (on Linux or Mac):
 
 ```
@@ -14,8 +18,8 @@ Storex Hub mediates between different apps which expose their data and allow you
 
 Since only remote apps are supported for now, we'll start by creating one of those. Storex Hub is designed so you can connect to it in different ways, but for now only REST and Socket.io are supported. In Typescript/Javascript, there are convenience classes that wrap the Storex Hub API, while not tying you down to a specific protocol, so either:
 
-1. In the Storex Hub repo you just cloned, just copy the `/demo/gist-sharer` directory and start experimenting from there.
-2. Set up you own Node.js project and install the `@worldbrain/storex-hub` and `socket.io-client` dependencies
+1. In the Storex Hub repo you just cloned, just copy the `/demos/gist-sharer` directory to something like `/demo/getting-started`, modify the in `main.ts` and run it with `yarn ts-node demos/getting-started/main.ts`.
+2. Set up your own Node.js project and install the `@worldbrain/storex-hub` and `socket.io-client` dependencies. The `@worldbrain/storex-hub` package contains both the entire Storex Hub application (which we won't at the start) and the client, which gives you a convenient wrapper around the API and will in the future be available as a separate package.
 
 Now, it's time to connect to Storex Hub and register our new app:
 
@@ -43,7 +47,9 @@ async function setupClientCallbacks(
 }
 
 async function setupClient(application: Application) {
-  const socket = io(`http://localhost:3000`);
+  // Storex Hub run on port 50483 in development, and 50482 when
+  // started with NODE_ENV=production
+  const socket = io(`http://localhost:50483`);
   const client = await createStorexHubSocketClient(io, {
     callbacks: await setupClientCallbacks(application)
   });
@@ -303,6 +309,34 @@ async function setupClientCallbacks(
     }
   };
 }
+```
+
+## Testing Storex Hub integrations
+
+Remember how we've said earlier that the `@worldbrain/storex-hub` package contains the entire Storex Hub application which you can run from memory? You can use this to easily integration test your applications with Storex Hub. Using Mocha/Jest:
+
+```ts
+import { createMultiApiTestSuite } from "@worldbrain/storex-hub/lib/tests/api/index.tests";
+
+// Creates a test suite that tests both in-memory IndexedDB database and
+// with an on-disk SQLite database
+createMultiApiTestSuite("Integration Memex + Backup", ({ it }) => {
+  it("should work", async ({ createSession }) => {
+    const memex = await createSession({
+      type: "websocket",
+      callbacks: {}
+    });
+    await memex.registerApp({ name: "memex", identify: true });
+    // ... do things here
+
+    const backup = await createSession({
+      type: "websocket",
+      callbacks: {}
+    });
+    await backup.registerApp({ name: "backup", identify: true });
+    // ... do things here
+  });
+});
 ```
 
 ## Next steps
