@@ -14,6 +14,7 @@
 
   - [Overview](/storex-hub/)
   - [Getting started](/storex-hub/getting-started/)
+  - [Guides](/storex-hub/guides/)
   - [API reference](/storex-hub/api-reference/)
   - [Roadmap](/storex-hub/roadmap/)
   - [Get in touch](/storex-hub/contact/)

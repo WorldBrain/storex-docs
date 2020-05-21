@@ -1,0 +1,11 @@
+- Why would you want to write an external application?
+- Starting with the boilerplate and the development Storex Hub:
+  - `git clone git@github.com:WorldBrain/storex-hub-boilerplate.git`
+  - `git clone git@github.com:WorldBrain/storex-hub.git`
+  - In Storex Hub dir, run `DB_PATH=/tmp/storex-dev yarn start`
+- Connecting and registering/identifying with Storex Hub
+  - Note: You need to decide where you store the access key
+- Links to [Guides](/storex-hub/guides/)
+  - [Store your own data](/storex-hub/guides/storing-data/)
+  - [Interacting with other external applications](/storex-hub/guides/remote-apps/)
+  - [Storing your user-configurable settings](/storex-hub/guides/settings/)
