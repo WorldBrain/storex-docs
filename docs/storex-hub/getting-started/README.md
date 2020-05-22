@@ -1,3 +1,24 @@
 - Short intro what Storex Hub does
-- [Writing plugins](/storex-hub/getting-started/plugin/): Twitter integration, IPFS, Pocket integration. Future, you can also serve web apps.
-- [External applications](/storex-hub/getting-started/external/): Command-line tools, exporter, front-ends, showing data from other apps in existing applications like Memex or Hypothes.is
+- What we are going to do
+  - Download the boilerplate
+  - Start the development version of Storex Hub
+  - Write an external application, so you can quickly start and restart it
+  - Experiment with some endpoint (exposing a GitHub related call?)
+  - Package it as a plugin?
+- Starting with the boilerplate and the development Storex Hub:
+  - `git clone git@github.com:WorldBrain/storex-hub-boilerplate.git`
+  - `git clone git@github.com:WorldBrain/storex-hub.git`
+  - In Storex Hub dir, run `DB_PATH=/tmp/storex-dev yarn start`
+- The boilerplate automatically registers your external app (link to another page)
+- Implementing the remote call
+  - https://api.github.com/orgs/WorldBrain
+- Packaging it as a plugin
+  - The execution model of plugins
+  - You build a plugin with Webpack
+  - You either place it in the plugin dir next to the Storex Hub binary, or install it with the CLI
+- The manifest: `identifer`, `version`, `siteUrl`, `entryFunction`
+- Links to [Guides](/storex-hub/guides/) showing the different things you can do with the API:
+  - [Store your own data](/storex-hub/guides/storing-data/)
+  - [Interacting with other external applications](/storex-hub/guides/remote-apps/)
+  - [Storing your user-configurable settings](/storex-hub/guides/settings/)
+  - [Integrating with Memex](/storex-hub/guides/memex/)
