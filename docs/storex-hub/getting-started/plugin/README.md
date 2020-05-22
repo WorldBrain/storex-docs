@@ -10,7 +10,8 @@
   - To install the plugin, run `yarn cli plugins:install <path-to-build-directory>`
   - Every time you want to reload your plugin, just kill the dev Storex Hub and run the command to start it again
 - The manifest: `identifer`, `version`, `siteUrl`, `mainPath`, `entryFunction`
-- Links to [Guides](/storex-hub/guides/)
+- Now, inside `ts/plugin.ts`, you get an object passed in with a `getApi()` method, which you can pass in callbacks to handle events, remote operations, remote calls, etc.
+- Links to [Guides](/storex-hub/guides/) showing the different things you can do with the API:
   - [Store your own data](/storex-hub/guides/storing-data/)
   - [Interacting with other external applications](/storex-hub/guides/remote-apps/)
   - [Storing your user-configurable settings](/storex-hub/guides/settings/)

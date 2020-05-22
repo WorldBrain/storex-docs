@@ -3,7 +3,8 @@
   - `git clone git@github.com:WorldBrain/storex-hub-boilerplate.git`
   - `git clone git@github.com:WorldBrain/storex-hub.git`
   - In Storex Hub dir, run `DB_PATH=/tmp/storex-dev yarn start`
-- Connecting and registering/identifying with Storex Hub
+  - Main entry point for external application in boilerplate is `ts/main.ts`
+- Connecting and registering/identifying with Storex Hub (example in `ts/application.ts`, method `registerOrIdentify()`)
   - Note: You need to decide where you store the access key
 - Links to [Guides](/storex-hub/guides/)
   - [Store your own data](/storex-hub/guides/storing-data/)

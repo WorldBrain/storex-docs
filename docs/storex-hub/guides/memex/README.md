@@ -8,6 +8,7 @@ classDiagram
     pages <|-- pageListEntries
     customLists <|-- pageListEntries
     customLists <|-- annotListEntries
+    annotations <|-- annotListEntries
     annotations <|-- annotBookmarks
 
     class pages {
