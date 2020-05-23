@@ -1,27 +1,40 @@
-# Storex Hub
+# StorexHub
 
-Storex was built to address the needs of [Memex](https://getmemex.com), a web research tool, to run on multiple platforms with different levels of tooling around data storage. However, the users of Memex, knowledge workers, have specific needs for their research workflows that are not addressable by any single, general tools. Therefore, the goal of Storex Hub is to provide an easy way for multiple offline-first applications to expose and connect data between them. This way, it'd suddenly by possible to:
+Everyone has different knowledge workflows, uses different apps and communicates differently. 
+The systems around us tend to lock us in or are inflexible to adapt to our needs. 
+Often, the features or integrations we want are not on the developers roadmap. 
 
-- Develop a specialized application for managing tags of different types of content stored by different applications, like web pages stored by Memex, Tweets stored by a Twitter integration, articles coming from your RSS reeds, etc. instead of creating such a tag management UI for each application individually.
-- Feed notes attached to diffferent kinds of contents into other tools.
-- Write a backup application that backs up the data of all your applications at once, instead of each application having its own backup solution.
-- Write a task management application where you could link tasks to Tweets, people, e-mails, etc.
+StorexHub was built to change that. 
+With it you can connect any combination of apps, and do custom data processing - without a cloud on your local computer. All processed data is also stored locally, so you have permanent access to it to reuse or innovate.
 
-## Current state and the near future
+##### Examples on what you can do with this: 
+ - Download all your Pocket and Memex bookmarks, do a content analysis and then publish those about `COVID-19` to Twitter and IPFS
+ - Automatically add all the pages, notes or calendar entries tagged with `TODO` to your task management tool.
+ - Search over all your stored data and find all content with the words `climate change`
+ - Write a backup application that backs up the data of all your applications at once, instead of each application having its own backup solution.
+ - Write a task management application where you could link tasks to Tweets, people, e-mails, etc.
+ - Develop a specialized application for managing tags of different types of content stored by different applications, like web pages stored by Memex, Tweets stored by a Twitter integration, articles coming from your RSS reeds, etc. instead of creating such a tag management UI for each application individually.
 
-Currently, Storex Hub is a local server, started from the command line, that multiple applications can connect to from their own processes using either REST/Websocket and 1) query/manipulate the data of other applications, and 2) process requests by other application to query/manipulate their data. This means that one application can store it's data in IndexedDB running on Javacript, while another application could be based on Python and store its data in some service in the cloud, while communicating in a simple and standardized way.
 
-Once this functionality is stable, we'd like applications to be able store their data directly in Storex Hub, so we can gradually move toward data being stored independently for their apps (e.g. my contact list instead of the contact list stored in my CRM app, my e-mail client, etc.) This'd require a solid permission model, infrastucture to deal with schema changes, etc.
+## Current state
 
-## Further into the future
+Currently, Storex Hub is a local server that multiple local and cloud applications can connect to from their using either REST/Websocket and 1) query/manipulate the data of other applications, and 2) process requests by other application to query/manipulate their data. This means that one application can store its data in IndexedDB running on Javacript, while another application could be based on Python and store its data in some service in the cloud, while communicating in a simple and standardized way.
 
-Once we have data from multiple applications stored in a single datastore, we can work more on connecting this data and experimenting with models to that. We don't want a user to have multiple separate contact lists for example, but being able to show and manipulate it from any of the installed applications that interact with the user list. This probably includes describing data with standards like RDF, figuring out what the most suitable database engine is to keep things reasonably efficient, etc.
+You can download it here: TODO: create executable and upload it to github
 
-Aside from that, there are many more things that'd be awesome for users and developers to have at their disposal in user-friendly privacy-focused applications. Check out the [roadmap](/storex-hub/roadmap/) for some ideas here.
 
-## What's next?
+## Feature Roadmap
 
-Check out the [getting started guide](/storex-hub/getting-started/) to start playing around with Storex Hub.
+- Permission model & access control to ensure apps don't have unauthorized access to other apps data 
+- Offline-first multi-DEVICE sync that StorexHub plugins can use out of the box
+- Offline-first multi-USER sync for sharing & collaboration that StorexHub plugins can use out of the box 
+
+Help us accelerating this roadmap and support us on [OpenCollective](https://opencollective.com/worldbrain). 
+
+
+## Want to get started?
+
+Check out the [getting started guide](/storex-hub/getting-started/?id=getting-started) to start playing around with StorexHub.
 
 <!--
 - A guide on the API enpoints

@@ -1,5 +1,17 @@
 - [Home](/)
-- Guides
+
+- Storex Hub
+
+  - [Overview](/storex-hub/)
+  - [Getting started](/storex-hub/getting-started/)
+    - [Plugin Development Guide](/storex-hub/guides/plugin-dev-guide/)
+    - [Integrating with Memex](/storex-hub/guides/memex/)
+  - [API reference](/storex-hub/api-reference/)
+  - [Roadmap](/storex-hub/roadmap/)
+  - [Get in touch](/storex-hub/contact/)
+
+  
+- Storex
 
   - [Quickstart](/guides/quickstart/)
   - [Storage registry](/guides/storage-registry/)
@@ -10,14 +22,7 @@
   - [GraphQL API](/guides/graphql-api/)
   - [Multi-device sync](/guides/multi-device-sync/)
 
-- Storex Hub
 
-  - [Overview](/storex-hub/)
-  - [Getting started](/storex-hub/getting-started/)
-  - [Guides](/storex-hub/guides/)
-  - [API reference](/storex-hub/api-reference/)
-  - [Roadmap](/storex-hub/roadmap/)
-  - [Get in touch](/storex-hub/contact/)
 
 <!--
 - [Best practices](/best-practices/)
