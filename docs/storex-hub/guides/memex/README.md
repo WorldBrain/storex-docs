@@ -2,7 +2,7 @@
 
 Integrating with Memex allows you to:
 
-1. Listen to data changes in Memex
+1. Listen to data changes in Memex and process them
 2. Index urls on demand
 3. Export & import data on demand
 
@@ -21,7 +21,11 @@ By default Memex does not connect to StorexHub. To open the connection open the 
 - When you're developing a plugin using the development version of Storex Hub: `await bgModules.storexHub.connect({ development: true })`
 - To connect to your production, standalone version of Storex Hub: `await bgModules.storexHub.connect()`
 
-### 1.2 Download & start StorexHub
+### 1.2 Setup your StorexHub developer environment
+
+Follow the [StorexHub development guide](/storex-hub/guides/plugin-dev-guide/)
+
+Foll
 
 Find the last release [here](https://github.com/WorldBrain/storex-hub/releases).
 
@@ -36,7 +40,7 @@ Find the last release [here](https://github.com/WorldBrain/storex-hub/releases).
 ### 2.1 Use Case 1: Listen and process data changes in Memex
 
 With this method you can listen to every change in Memex and process it individually.
-Subscribe to Memex storage changes, which may fail if Memex is not running. ([Example](https://github.com/WorldBrain/storex-hub-integration-memex-arweave/blob/878bf121bfba36ddf734dead9eba9e1272b61764/ts/application.ts#L43))
+Memex & your browser needs to be running to receive and process changes. ([Example](https://github.com/WorldBrain/storex-hub-integration-memex-arweave/blob/878bf121bfba36ddf734dead9eba9e1272b61764/ts/application.ts#L43))
 
 **Note:** Memex/StorexHub do not buffer changes yet. Meaning in order for the connections to work, both StorexHub and Memex need to run. Get in touch with us [via the chat](https://worldbrain.slack.com/join/shared_invite/enQtOTcwMjQxNTgyNTE4LTRhYTAzN2QwNmM3ZjQwMGE5MzllZDM3N2E5OTFjY2FmY2JmOTY3ZWJhNGEyNWRiMzU5NTZjMzU0MWJhOTA2ZDA) if you like to contribute to improving this.
 
