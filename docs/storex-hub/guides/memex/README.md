@@ -217,7 +217,6 @@ const { status, result: page } = await api.executeRemoteOperation({
 ##### 10. add a bookmark to an existing page
 
 Make sure the PAGE object does already exist otherwise the bookmark status can't be displayed. It will be saved though. 
-- be sure the bookmark doesn't already exists first (TODO - WHY?)
 
 ```js
 const { status, result: page } = await api.executeRemoteOperation({
