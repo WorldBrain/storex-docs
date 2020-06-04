@@ -27,11 +27,11 @@ This enables use cases like:
 
 - DONE: Allow different apps to expose their storage to other apps.
 - DONE: Allow apps to signal changes to their storage to other apps.
-- A developer-oriented app installation mechanism
+- DONE: Plugin packaging and installation mechanism
 
 #### Separation of data from apps
 
-- Storing data inside of Storex Hub to separate data from apps
+- DONE: Storing data inside of Storex Hub to separate data from apps
 - Schema migrations to standardize how data changes as its (explicit or implicit) schema evolves using [storex-schema-migrations](/guides/schema-migrations/)
 - Backward compatibility for apps written to interact with old data models of other apps
 - Media storage
@@ -46,7 +46,6 @@ This enables use cases like:
 
 - Adaptable import/export mechanism to map internal data structures to and from other data formats (web annotations, csv, etc.)
 - Standard mechanisms to work with external APIs and datastores, both centralized (cloud databases) and non-centralized (IPFS, Ethereum, etc.)
-- Ability to index urls on demand
 
 #### Multi-device usage
 
@@ -65,10 +64,10 @@ This enables use cases like:
 
 #### Distribution to non-developers
 
-- Easy, cross-platform installation method for Storex Hub
+- DONE: Easy, cross-platform installation method for Storex Hub
 - App distribution and runtime security model
 - User-centered data security model explaining in plain terms what different apps might do to your data
-- Unified GUI to manage settings and permissions of different apps
+- Unified GUI to manage settings and permissions of different apps (DONE: settings)
 
 #### Notifications
 
