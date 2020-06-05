@@ -32,7 +32,8 @@ As a central document, the manifest contains all important information about the
 | identifer     | ID of your application.                                             | Reverse domain name convention with the reversed domain name of your organization, followed the plugin name, like `io.worldbrain.twitter` for a Twitter integration written by WorldBrain. The boilerplate comes with a default app identifier, so change the `APP_NAME` in `ts/constant.ts` to something like: `const APP_NAME = "com.test.example";` |
 | version       | Version Number of your application                                  | Follow the [SemVer](https://semver.org/) convention.                                                                                                                                                                                                                                                                                                   |
 | siteUrl       | Url to docs or website your plugin links in the StorexHub dashboard | Any URL you want                                                                                                                                                                                                                                                                                                                                       |
-| entryFunction | TODO                                                                | TODO                                                                                                                                                                                                                                                                                                                                                   |
+| mainPath      | Path relative to the plugin root contain the plugin code            | A relative path, like plugin.js                                                                                                                                                                                                                                                                                                                        |
+| entryFunction | Which function in the main JS file to call to initialize the plugin | A function name, like `main`                                                                                                                                                                                                                                                                                                                           |
 
 ### 2. Using the boilerplate
 
@@ -48,7 +49,6 @@ yarn build:dev or yarn build:prod
 cd <storex-hub-dir>
 yarn cli plugins:install <this-repo>/build
 ```
-
 
 ### 3. External application or StorexHub plugins
 
@@ -67,14 +67,8 @@ npm run start
 
 As a simple example, we'll expose functionality for other apps to get some details about a GitHub organization. We do this through remote calls, which are function calls that StorexHub routes to the specified app.
 
-Registering a call. Examples: 
-    - https://github.com/WorldBrain/Memex/blob/9d745f7fa82e751929519183c5bf366cc42ea81d/src/storex-hub/background/index.ts#L67
-    - https://github.com/WorldBrain/Memex/blob/9d745f7fa82e751929519183c5bf366cc42ea81d/src/storex-hub/background/index.ts#L97
-    - Note: The client here implements the API
-Consuming a call. Examples:
-    - In code: https://github.com/WorldBrain/storex-hub/blob/develop/ts/tests/api/remote-apps.test.ts#L261
-    - Note: Here we get an API in another way, but it's still the same API
-    - From the CLI: `yarn cli calls:execute io.worldbrain.memex indexPage '{"url": "http://www.thomasthwaites.com/the-toaster-project/", "bookmark": true, "tags": ["tag-one", "tag-two"]}'`
+Registering a call. Examples: - https://github.com/WorldBrain/Memex/blob/9d745f7fa82e751929519183c5bf366cc42ea81d/src/storex-hub/background/index.ts#L67 - https://github.com/WorldBrain/Memex/blob/9d745f7fa82e751929519183c5bf366cc42ea81d/src/storex-hub/background/index.ts#L97 - Note: The client here implements the API
+Consuming a call. Examples: - In code: https://github.com/WorldBrain/storex-hub/blob/develop/ts/tests/api/remote-apps.test.ts#L261 - Note: Here we get an API in another way, but it's still the same API - From the CLI: `yarn cli calls:execute io.worldbrain.memex indexPage '{"url": "http://www.thomasthwaites.com/the-toaster-project/", "bookmark": true, "tags": ["tag-one", "tag-two"]}'`
 
 ## 4. Bundling and installing a plugin
 
@@ -87,7 +81,6 @@ yarn cli plugins:install <this-repo>/build
 ```
 
 Then your app is ready to be put into the `/plugins` folder and installed.
-
 
 ## 4. Development tips
 
