@@ -19,7 +19,7 @@ Access the running StorexHub Interface with
 
 With these steps, you manually specified another database directory and plugins directory. These things ensure you can safely develop your apps without messing up important data in your main StorexHub, and can isolate the development environment of different apps you may be writing.
 
-Your DB location on disk in StorexHub's folder. You can use a separate one for each app you're developing, so you have isolated environments. This way your data is preserved between restarts and if you have an external application that stores the access token, you can re-use that access token. If you run Storex Hub in memory, it will forget those access token, so you also need to forget it and recreate your app from your external application. To run Storex Hub in memory, just omit the DB_PATH.
+Your DB location on disk in the folder you've specified with DB_PATH. You can use a separate one for each app you're developing, so you have isolated environments. This way your data is preserved between restarts and if you have an external application that stores the access token, you can re-use that access token. If you run Storex Hub in memory, it will forget those access token, so you also need to forget it and recreate your app from your external application. To run Storex Hub in memory, just omit the DB_PATH.
 
 ## 2. Understanding the structure of StorexHub Plugins
 
@@ -67,8 +67,18 @@ npm run start
 
 As a simple example, we'll expose functionality for other apps to get some details about a GitHub organization. We do this through remote calls, which are function calls that StorexHub routes to the specified app.
 
-Registering a call. Examples: - https://github.com/WorldBrain/Memex/blob/9d745f7fa82e751929519183c5bf366cc42ea81d/src/storex-hub/background/index.ts#L67 - https://github.com/WorldBrain/Memex/blob/9d745f7fa82e751929519183c5bf366cc42ea81d/src/storex-hub/background/index.ts#L97 - Note: The client here implements the API
-Consuming a call. Examples: - In code: https://github.com/WorldBrain/storex-hub/blob/develop/ts/tests/api/remote-apps.test.ts#L261 - Note: Here we get an API in another way, but it's still the same API - From the CLI: `yarn cli calls:execute io.worldbrain.memex indexPage '{"url": "http://www.thomasthwaites.com/the-toaster-project/", "bookmark": true, "tags": ["tag-one", "tag-two"]}'`
+Registering a call:
+
+- How to handle an incoming remote call: https://github.com/WorldBrain/Memex/blob/9d745f7fa82e751929519183c5bf366cc42ea81d/src/storex-hub/background/index.ts#L67
+- Example of what you can do in a remote call: https://github.com/WorldBrain/Memex/blob/9d745f7fa82e751929519183c5bf366cc42ea81d/src/storex-hub/background/index.ts#L97
+- Note: In above links, `client` implements the Storex Hub API by communication with Storex Hub over Websocket
+
+Consuming a call:
+
+- From the integration tests: https://github.com/WorldBrain/storex-hub/blob/develop/ts/tests/api/remote-apps.test.ts#L261
+- Note: In the test above, we get access to the Storex Hub API in another way, but it's the same API the `client` exposes
+- From the CLI: `yarn cli calls:execute io.worldbrain.memex indexPage '{"url": "http://www.thomasthwaites.com/the-toaster-project/", "bookmark": true, "tags": ["tag-one", "tag-two"]}'`
+- If you want to test the above Memex call, see the [](/storex-hub/guides/memex/)
 
 ## 4. Bundling and installing a plugin
 
@@ -81,7 +91,3 @@ yarn cli plugins:install <this-repo>/build
 ```
 
 Then your app is ready to be put into the `/plugins` folder and installed.
-
-## 4. Development tips
-
-TODO!
