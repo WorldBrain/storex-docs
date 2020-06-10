@@ -9,7 +9,7 @@ This way we can focus on getting the basics right, without having to invest sign
 
 ## Status
 
-Currently StorexHub has 3 functionalities:
+Currently Storex Hub has 3 functionalities:
 
 1. Register a new remote application (with no persistent storage)
 2. Listen to Memex data changes

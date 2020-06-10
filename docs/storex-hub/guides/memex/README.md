@@ -10,9 +10,10 @@ Integrating with Memex allows you to:
 
 ### 1.1 Enable feature that Memex can talk to outside applications
 
-By default Memex does not connect to StorexHub. To open the connection open the background console of Memex and type:
+By default Memex does not connect to Storex Hub. To open the connection open the background console of Memex and type:
 
 ##### 1.1.1 Go to the background console of the extension
+
 - Firefox: [about:devtools-toolbox?type=extension&id=info%40worldbrain.io](about:devtools-toolbox?type=extension&id=info%40worldbrain.io)
 - Chrome: `chrome://extensions > enable developer mode > Memex > background page > console`
 
@@ -21,9 +22,9 @@ By default Memex does not connect to StorexHub. To open the connection open the 
 - When you're developing a plugin using the development version of Storex Hub: `await bgModules.storexHub.connect({ development: true })`
 - To connect to your production, standalone version of Storex Hub: `await bgModules.storexHub.connect()`
 
-### 1.2 Setup your StorexHub developer environment
+### 1.2 Setup your Storex Hub developer environment
 
-Follow the [StorexHub development guide](/storex-hub/guides/plugin-dev-guide/)
+Follow the [Storex Hub development guide](/storex-hub/guides/plugin-dev-guide/)
 
 Foll
 
@@ -31,9 +32,9 @@ Find the last release [here](https://github.com/WorldBrain/storex-hub/releases).
 
 ### 1.3 Create an plugin or connect an external app
 
-##### 1.3.1 Create your client (in an external app) or get the API (in a plugin) with a `handleEvent` callback. ([Example](https://github.com/WorldBrain/storex-hub-integration-memex-arweave/blob/878bf121bfba36ddf734dead9eba9e1272b61764/ts/application.ts#L44)) 
-##### 1.3.2 You listen to when Memex is started again ([Example 1](https://github.com/WorldBrain/storex-hub-integration-memex-arweave/blob/878bf121bfba36ddf734dead9eba9e1272b61764/ts/application.ts#L162), [Example 2](https://github.com/WorldBrain/storex-hub-integration-memex-arweave/blob/878bf121bfba36ddf734dead9eba9e1272b61764/ts/application.ts#L47))
+##### 1.3.1 Create your client (in an external app) or get the API (in a plugin) with a `handleEvent` callback. ([Example](https://github.com/WorldBrain/storex-hub-integration-memex-arweave/blob/878bf121bfba36ddf734dead9eba9e1272b61764/ts/application.ts#L44))
 
+##### 1.3.2 You listen to when Memex is started again ([Example 1](https://github.com/WorldBrain/storex-hub-integration-memex-arweave/blob/878bf121bfba36ddf734dead9eba9e1272b61764/ts/application.ts#L162), [Example 2](https://github.com/WorldBrain/storex-hub-integration-memex-arweave/blob/878bf121bfba36ddf734dead9eba9e1272b61764/ts/application.ts#L47))
 
 ## 2. Use Cases:
 
@@ -42,9 +43,7 @@ Find the last release [here](https://github.com/WorldBrain/storex-hub/releases).
 With this method you can listen to every change in Memex and process it individually.
 Memex & your browser needs to be running to receive and process changes. ([Example](https://github.com/WorldBrain/storex-hub-integration-memex-arweave/blob/878bf121bfba36ddf734dead9eba9e1272b61764/ts/application.ts#L43))
 
-**Note:** Memex/StorexHub do not buffer changes yet. Meaning in order for the connections to work, both StorexHub and Memex need to run. Get in touch with us [via the chat](https://worldbrain.slack.com/join/shared_invite/enQtOTcwMjQxNTgyNTE4LTRhYTAzN2QwNmM3ZjQwMGE5MzllZDM3N2E5OTFjY2FmY2JmOTY3ZWJhNGEyNWRiMzU5NTZjMzU0MWJhOTA2ZDA) if you like to contribute to improving this.
-
-
+**Note:** Memex/Storex Hub do not buffer changes yet. Meaning in order for the connections to work, both Storex Hub and Memex need to run. Get in touch with us [via the chat](https://worldbrain.slack.com/join/shared_invite/enQtOTcwMjQxNTgyNTE4LTRhYTAzN2QwNmM3ZjQwMGE5MzllZDM3N2E5OTFjY2FmY2JmOTY3ZWJhNGEyNWRiMzU5NTZjMzU0MWJhOTA2ZDA) if you like to contribute to improving this.
 
 ### 2.2 Use Case 2: Index urls on demand
 
@@ -81,12 +80,12 @@ if (status === "success") {
 With this method you can query Memex data or save new things to the database.
 Those are the standard Storex operations you can use as detailed [here](/guides/storage-operations/) and [here](/guides/quickstart/?id=manipulating-data)
 
-If you want to inspect the data model of Memex, you can do so via the browser database explorer. 
+If you want to inspect the data model of Memex, you can do so via the browser database explorer.
 
 **This is how to find it:**
+
 - Firefox: [about:devtools-toolbox?type=extension&id=info%40worldbrain.io](about:devtools-toolbox?type=extension&id=info%40worldbrain.io) `storage > IndexedDB > memex`
 - Chrome: `chrome://extensions > enable developer mode > Memex > background page > Application > IndexedDB > memex`
-
 
 #### Examples:
 
@@ -132,20 +131,22 @@ Note: This is not indexing the page, just populating the database with the data 
 ```js
 const { status, result: page } = await api.executeRemoteOperation({
   app: "io.worldbrain.memex",
-  operation: ["createObject", 
-    "pages", { 
+  operation: [
+    "createObject",
+    "pages",
+    {
       canonicalUrl: undefined,
       domain: "mozilla.org",
-      fullTitle: "Source Code Upload :: WorldBrain's Memex :: Add-ons for Firefox",
+      fullTitle:
+        "Source Code Upload :: WorldBrain's Memex :: Add-ons for Firefox",
       fullUrl: "https://addons.mozilla.org/en-GB/developers/addon/worldbrain",
       hostname: "addons.mozilla.org",
       text: "lorem ipsum",
       url: "addons.mozilla.org/en-GB/developers/addon/worldbrain",
-    }
-    ],
+    },
+  ],
 });
 ```
-
 
 ##### 5. add a tag to an existing page
 
@@ -158,22 +159,23 @@ const { status, result: page } = await api.executeRemoteOperation({
 });
 ```
 
-
-
 ##### 6. create a new list
-You can either add a page to an existing list, or adding a new list. But in order to add an item to a list (6.), the list needs to exist beforehand. 
+
+You can either add a page to an existing list, or adding a new list. But in order to add an item to a list (6.), the list needs to exist beforehand.
 
 ```js
 const { status, result: page } = await api.executeRemoteOperation({
   app: "io.worldbrain.memex",
   operation: [
-    "createObject", 
-    "customLists", { 
-        createdAt: Date.now(),
-        isDeletable: 1, // 0 for lists that can't be removed like the "saved from mobile" list
-        isNestable: 1, // non-used parameter preparing us for nested lists
-        name: "Great tools for thought",
-    }],
+    "createObject",
+    "customLists",
+    {
+      createdAt: Date.now(),
+      isDeletable: 1, // 0 for lists that can't be removed like the "saved from mobile" list
+      isNestable: 1, // non-used parameter preparing us for nested lists
+      name: "Great tools for thought",
+    },
+  ],
 });
 ```
 
@@ -199,24 +201,25 @@ const { status, result: page } = await api.executeRemoteOperation({
 
 To add a new item to a list make sure the PAGE object does already exist otherwise the entry won't appear in the list
 
-
 ```js
 const { status, result: page } = await api.executeRemoteOperation({
   app: "io.worldbrain.memex",
   operation: [
-    "createObject", 
-    "pageListEntries", { 
+    "createObject",
+    "pageListEntries",
+    {
       createdAt: Date.now(),
       fullUrl: "https://www.test.com/about-us",
       listId: 12345678, //existing or newly created through process "create new list"
       pageUrl: "test.com/about-us", // normalised format without http(s) and www.
-    }],
+    },
+  ],
 });
 ```
 
 ##### 10. add a bookmark to an existing page
 
-Make sure the PAGE object does already exist otherwise the bookmark status can't be displayed. It will be saved though. 
+Make sure the PAGE object does already exist otherwise the bookmark status can't be displayed. It will be saved though.
 
 ```js
 const { status, result: page } = await api.executeRemoteOperation({
@@ -228,7 +231,6 @@ const { status, result: page } = await api.executeRemoteOperation({
   ],
 });
 ```
-
 
 ## 3. Understanding Memex' data model
 
@@ -242,10 +244,10 @@ const { status, result: page } = await api.executeRemoteOperation({
     - pageListEntries: The customLists ID + `url` as an array the format: `[1, 'http://www.page.com']`
 - `url` fields in `pages`, `bookmarks`, `visits` and `pageListEntries` are normalized URLs.
 - All the data classes with an arrow to another class can't be displayed without their existence. (e.g. `bookmarks` status without having a `pages` object)
-- If you want to inspect the data model of Memex, you can do so via the browser database explorer. 
-    - **This is how to find it:**
-      - Firefox: [about:devtools-toolbox?type=extension&id=info%40worldbrain.io](about:devtools-toolbox?type=extension&id=info%40worldbrain.io) `storage > IndexedDB > memex`
-      - Chrome: `chrome://extensions > enable developer mode > Memex > background page > Application > IndexedDB > memex`
+- If you want to inspect the data model of Memex, you can do so via the browser database explorer.
+  - **This is how to find it:**
+    - Firefox: [about:devtools-toolbox?type=extension&id=info%40worldbrain.io](about:devtools-toolbox?type=extension&id=info%40worldbrain.io) `storage > IndexedDB > memex`
+    - Chrome: `chrome://extensions > enable developer mode > Memex > background page > Application > IndexedDB > memex`
 
 ```mermaid
 classDiagram
