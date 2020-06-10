@@ -6,46 +6,43 @@ Integrating with Memex allows you to:
 2. Index urls on demand
 3. Export & import data on demand
 
-## 1. Setting up the environment.
+## Setting up the environment.
 
-### 1.1 Enable feature that Memex can talk to outside applications
+### Enable feature that Memex can talk to outside applications
 
 By default Memex does not connect to Storex Hub. To open the connection open the background console of Memex and type:
 
-##### 1.1.1 Go to the background console of the extension
+##### Go to the background console of the extension
 
 - Firefox: [about:devtools-toolbox?type=extension&id=info%40worldbrain.io](about:devtools-toolbox?type=extension&id=info%40worldbrain.io)
 - Chrome: `chrome://extensions > enable developer mode > Memex > background page > console`
 
-##### 1.1.2 Enter these commands into the console
+##### Enter these commands into the console
 
 - When you're developing a plugin using the development version of Storex Hub: `await bgModules.storexHub.connect({ development: true })`
 - To connect to your production, standalone version of Storex Hub: `await bgModules.storexHub.connect()`
 
-### 1.2 Setup your Storex Hub developer environment
+### Setup your Storex Hub developer environment
 
 Follow the [Storex Hub development guide](/storex-hub/guides/plugin-dev-guide/)
 
-Foll
+### Create an plugin or connect an external app
 
-Find the last release [here](https://github.com/WorldBrain/storex-hub/releases).
+- Create your client (in an external app) or get the API (in a plugin) with a `handleEvent` callback. ([Example](https://github.com/WorldBrain/storex-hub-integration-memex-arweave/blob/878bf121bfba36ddf734dead9eba9e1272b61764/ts/application.ts#L44))
+- You listen to when Memex is started again ([Example 1](https://github.com/WorldBrain/storex-hub-integration-memex-arweave/blob/878bf121bfba36ddf734dead9eba9e1272b61764/ts/application.ts#L162), [Example 2](https://github.com/WorldBrain/storex-hub-integration-memex-arweave/blob/878bf121bfba36ddf734dead9eba9e1272b61764/ts/application.ts#L47))
 
-### 1.3 Create an plugin or connect an external app
+## Use Cases:
 
-##### 1.3.1 Create your client (in an external app) or get the API (in a plugin) with a `handleEvent` callback. ([Example](https://github.com/WorldBrain/storex-hub-integration-memex-arweave/blob/878bf121bfba36ddf734dead9eba9e1272b61764/ts/application.ts#L44))
-
-##### 1.3.2 You listen to when Memex is started again ([Example 1](https://github.com/WorldBrain/storex-hub-integration-memex-arweave/blob/878bf121bfba36ddf734dead9eba9e1272b61764/ts/application.ts#L162), [Example 2](https://github.com/WorldBrain/storex-hub-integration-memex-arweave/blob/878bf121bfba36ddf734dead9eba9e1272b61764/ts/application.ts#L47))
-
-## 2. Use Cases:
-
-### 2.1 Use Case 1: Listen and process data changes in Memex
+### Use Case 1: Listen and process data changes in Memex
 
 With this method you can listen to every change in Memex and process it individually.
-Memex & your browser needs to be running to receive and process changes. ([Example](https://github.com/WorldBrain/storex-hub-integration-memex-arweave/blob/878bf121bfba36ddf734dead9eba9e1272b61764/ts/application.ts#L43))
+Memex & your browser needs to be running to receive and process changes.
+
+An example implementation can be found [here](https://github.com/WorldBrain/storex-hub-integration-memex-arweave/blob/878bf121bfba36ddf734dead9eba9e1272b61764/ts/application.ts#L43).
 
 **Note:** Memex/Storex Hub do not buffer changes yet. Meaning in order for the connections to work, both Storex Hub and Memex need to run. Get in touch with us [via the chat](https://worldbrain.slack.com/join/shared_invite/enQtOTcwMjQxNTgyNTE4LTRhYTAzN2QwNmM3ZjQwMGE5MzllZDM3N2E5OTFjY2FmY2JmOTY3ZWJhNGEyNWRiMzU5NTZjMzU0MWJhOTA2ZDA) if you like to contribute to improving this.
 
-### 2.2 Use Case 2: Index urls on demand
+### Use Case 2: Index urls on demand
 
 You can use Memex internal indexing process to add new urls to your Memex history/bookmarks.
 
@@ -77,19 +74,16 @@ if (status === "success") {
 
 ### Use Case 3: Import/Export data on demand:
 
-With this method you can query Memex data or save new things to the database.
-Those are the standard Storex operations you can use as detailed [here](/guides/storage-operations/) and [here](/guides/quickstart/?id=manipulating-data)
+With this method you can query Memex data or save new things to the database. An example can be found [here](https://github.com/WorldBrain/storex-hub-integration-memex-arweave/blob/878bf121bfba36ddf734dead9eba9e1272b61764/ts/application.ts#L76). The storage operations you can execute with `executeRemoteOperation()` are the standard Storex operations described [here](/guides/storage-operations/) and [here](/guides/quickstart/?id=manipulating-data).
 
-If you want to inspect the data model of Memex, you can do so via the browser database explorer.
-
-**This is how to find it:**
+If you want to inspect the data model of Memex, you can do so via the database explorer of the broswer you're running Memex in:
 
 - Firefox: [about:devtools-toolbox?type=extension&id=info%40worldbrain.io](about:devtools-toolbox?type=extension&id=info%40worldbrain.io) `storage > IndexedDB > memex`
 - Chrome: `chrome://extensions > enable developer mode > Memex > background page > Application > IndexedDB > memex`
 
 #### Examples:
 
-##### 1. get all pages tagged with `share-test`:
+##### Get all pages tagged with `share-test`:
 
 ```js
 const { status, result: pages } = await api.executeRemoteOperation({
@@ -98,7 +92,7 @@ const { status, result: pages } = await api.executeRemoteOperation({
 });
 ```
 
-##### 2. get all pages visited in the last 3 hours:
+##### Get all pages visited in the last 3 hours:
 
 ```js
 const { status: result: visits } = await api.executeRemoteOperation({
@@ -111,7 +105,7 @@ const { status: result: visits } = await api.executeRemoteOperation({
 });
 ```
 
-##### 3. get page details by URL
+##### Get page details by URL
 
 With the above commands you will only get the respective url back (and tag/visit time respectively).
 To get all page data, like `title`, `text` or other metadata, you need to then loop through your previous results and fetch the page data with the following command.
@@ -123,7 +117,7 @@ const { status, result: page } = await api.executeRemoteOperation({
 });
 ```
 
-##### 4. add a new page object
+##### Add a new page object
 
 You can either full-text index a `url` via the Memex indexing function (2.2) or manually add a page object if you have all necessary data already.
 Note: This is not indexing the page, just populating the database with the data you entered.
@@ -148,7 +142,7 @@ const { status, result: page } = await api.executeRemoteOperation({
 });
 ```
 
-##### 5. add a tag to an existing page
+##### Add a tag to an existing page
 
 Make sure the respective PAGE object (4. or 2.2) does already exist otherwise the tag can't be displayed
 
@@ -159,7 +153,7 @@ const { status, result: page } = await api.executeRemoteOperation({
 });
 ```
 
-##### 6. create a new list
+##### Create a new list
 
 You can either add a page to an existing list, or adding a new list. But in order to add an item to a list (6.), the list needs to exist beforehand.
 
@@ -179,7 +173,7 @@ const { status, result: page } = await api.executeRemoteOperation({
 });
 ```
 
-##### 7. Get all Mememx lists
+##### Get all Mememx lists
 
 ```js
 const { status, result: page } = await api.executeRemoteOperation({
@@ -188,7 +182,7 @@ const { status, result: page } = await api.executeRemoteOperation({
 });
 ```
 
-##### 8. Find a specific Memex list with its name
+##### Find a specific Memex list with its name
 
 ```js
 const { status, result: page } = await api.executeRemoteOperation({
@@ -197,7 +191,7 @@ const { status, result: page } = await api.executeRemoteOperation({
 });
 ```
 
-##### 9. Add a new item to a list
+##### Add a new item to a list
 
 To add a new item to a list make sure the PAGE object does already exist otherwise the entry won't appear in the list
 
@@ -217,7 +211,7 @@ const { status, result: page } = await api.executeRemoteOperation({
 });
 ```
 
-##### 10. add a bookmark to an existing page
+##### Add a bookmark to an existing page
 
 Make sure the PAGE object does already exist otherwise the bookmark status can't be displayed. It will be saved though.
 
@@ -232,7 +226,7 @@ const { status, result: page } = await api.executeRemoteOperation({
 });
 ```
 
-## 3. Understanding Memex' data model
+## Understanding Memex' data model
 
 ### How to read this
 
