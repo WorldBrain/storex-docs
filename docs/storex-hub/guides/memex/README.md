@@ -20,7 +20,7 @@ By default Memex does not connect to Storex Hub. To open the connection open the
 ##### Enter these commands into the console
 
 - When you're developing a plugin using the development version of Storex Hub: `await bgModules.storexHub.connect({ development: true })`
-- To connect to your production, standalone version of Storex Hub: `await bgModules.storexHub.connect()`
+- To connect to your production, standalone version of Storex Hub: `await bgModules.storexHub.connect({})`
 
 ### Setup your Storex Hub developer environment
 
