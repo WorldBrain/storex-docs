@@ -22,6 +22,6 @@
   "dependencies": {
     "colors": "^1.4.0",
     "glob": "^7.1.5",
-    "marked": "^0.7.0"
+    "marked": "^4.0.10"
   }
 }
